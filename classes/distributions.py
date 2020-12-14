@@ -24,3 +24,7 @@ class NormalDistribution:
         self.mu = mu
         self.sigma = sigma
 
+
+    def random(self, size=None):
+        return np.random.normal(self.mu, self.sigma, size)
+
