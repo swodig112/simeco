@@ -28,3 +28,9 @@ class NormalDistribution:
     def random(self, size=None):
         return np.random.normal(self.mu, self.sigma, size)
 
+
+    def plot(self, num=100):
+        x = np.linspace(self.mu - 3 * self.sigma, self.mu + 3 * self.sigma, num)
+        plt.plot(x, stats.norm.pdf(x, self.mu, self.sigma))
+        plt.show()
+
