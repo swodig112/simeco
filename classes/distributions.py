@@ -12,3 +12,9 @@ class UniformDistribution:
     def random(self, size=None):
         return np.random.uniform(self.low, self.high, size)
 
+
+    def plot(self, num=100):
+        x = np.linspace(self.low, self.high, num)
+        plt.plot(x, stats.uniform.pdf(x, self.low, self.high))
+        plt.show()
+
