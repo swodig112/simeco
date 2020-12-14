@@ -18,3 +18,9 @@ class UniformDistribution:
         plt.plot(x, stats.uniform.pdf(x, self.low, self.high))
         plt.show()
 
+
+class NormalDistribution:
+    def __init__(self, mu=0, sigma=1):
+        self.mu = mu
+        self.sigma = sigma
+
