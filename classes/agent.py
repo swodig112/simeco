@@ -23,3 +23,18 @@ class Agent :
                 expenses_changes[1])
         self.previncome = self.income * 0.9
 
+
+    def update (self):
+        self.age +=1
+        if not self.working:
+            if self.hiring_possibility.random() >= 1:
+                self.working = True
+                self.income = self.previncome * 0.9
+                self.previncome = self.income
+        elif self.firing_possibility.random() >= 1:
+            self.income = 0
+            self.working = False
+        self.money += self.income - self.expenses
+        self.income *= self.income_changes.random()
+        self.expenses *= self.expenses_changes.random()
+
