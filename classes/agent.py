@@ -13,7 +13,7 @@ class Agent :
         self.income = income
         self.expenses = expenses
         self.working = False
-        self.results = {"money": [], "income": [], "expenses": [], "working": []}
+        self.results = {"age": [], "money": [], "income": [], "expenses": [], "working": []}
         if self.income != 0:
             self.working = True
         self.hiring_possibility = NormalDistribution(hiring_possibility[0],
@@ -46,3 +46,10 @@ class Agent :
         self.add_results(self.age, self.money, self.income, self.expenses,
                 self.working)
 
+
+    def add_results(self, age, money, income, expenses, working):
+        self.results["age"].append(age)
+        self.results["money"].append(money)
+        self.results["income"].append(income)
+        self.results["expenses"].append(expenses)
+        self.results["working"].append(working
