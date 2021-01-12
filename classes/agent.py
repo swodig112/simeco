@@ -39,9 +39,9 @@ class Agent :
             self.income = 0
             self.working = 0
             self.firing_possibility.mu += 0.05
-        self.money += self.income - self.expenses
         self.income += self.income_changes.random()
         self.expenses += self.expenses_changes.random()
+        self.money += self.income - self.expenses
 
         self.add_results(self.age, self.money, self.income, self.expenses,
                 self.working)
