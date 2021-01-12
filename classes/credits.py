@@ -9,3 +9,12 @@ class DebtManager:
                 birth_month, "paid": paid}
         self.debtID += 1
 
+
+    def update(self):
+        paid_debts = []
+        for debtID in self.debts:
+            if self.debts[debtID]["paid"] == self.debts[debtID]["debt_amount"]:
+                paid_debts.append(debtID)
+
+        for debtID in paid_debts:
+            self.debts.pop(debtID)
