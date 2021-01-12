@@ -13,7 +13,7 @@ class Agent :
         self.income = income
         self.expenses = expenses
         self.working = False
-        self.results = []
+        self.results = {"money": [], "income": [], "expenses": [], "working": []}
         if self.income != 0:
             self.working = True
         self.hiring_possibility = NormalDistribution(hiring_possibility[0],
