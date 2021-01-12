@@ -59,3 +59,11 @@ class Agent :
         plt.plot(range(self.initial_age, self.age), self.results[entry], label=entry)
         plt.legend()
 
+
+    def plot_histogram(self, entry):
+        plt.hist(self.results[result], bins = 100)
+        plt.show()
+
+
+    def show(self):
+        plt.show()
