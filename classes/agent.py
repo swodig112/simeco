@@ -52,4 +52,10 @@ class Agent :
         self.results["money"].append(money)
         self.results["income"].append(income)
         self.results["expenses"].append(expenses)
-        self.results["working"].append(working
+        self.results["working"].append(working)
+
+
+    def plot(self, entry):
+        plt.plot(range(self.initial_age, self.age), self.results[entry], label=entry)
+        plt.legend()
+
