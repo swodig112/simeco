@@ -12,10 +12,10 @@ class Agent :
         self.money = money
         self.income = income
         self.expenses = expenses
-        self.working = False
+        self.working = 0
         self.results = {"age": [], "money": [], "income": [], "expenses": [], "working": []}
         if self.income != 0:
-            self.working = True
+            self.working = 1
         self.hiring_possibility = NormalDistribution(hiring_possibility[0],
                 hiring_possibility[1])
         self.firing_possibility = NormalDistribution(firing_possibility[0],
@@ -31,17 +31,17 @@ class Agent :
         self.age +=1
         if not self.working:
             if self.hiring_possibility.random() >= 1:
-                self.working = True
+                self.working = 1
                 self.hiring_possibility.mu += 0.05
                 self.income = self.previncome * 0.9
                 self.previncome = self.income
         elif self.firing_possibility.random() >= 1:
             self.income = 0
-            self.working = False
+            self.working = 0
             self.firing_possibility.mu += 0.05
         self.money += self.income - self.expenses
-        self.income *= self.income_changes.random()
-        self.expenses *= self.expenses_changes.random()
+        self.income += self.income_changes.random()
+        self.expenses += self.expenses_changes.random()
 
         self.add_results(self.age, self.money, self.income, self.expenses,
                 self.working)
@@ -61,7 +61,7 @@ class Agent :
 
 
     def plot_histogram(self, entry):
-        plt.hist(self.results[result], bins = 100)
+        plt.hist(self.results[entry], bins = 100)
         plt.show()
 
 
