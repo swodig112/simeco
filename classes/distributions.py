@@ -8,10 +8,8 @@ class UniformDistribution:
         self.low = low
         self.high = high
 
-
     def random(self, size=None):
         return np.random.uniform(self.low, self.high, size)
-
 
     def plot(self, num=100):
         x = np.linspace(self.low, self.high, num)
@@ -24,13 +22,11 @@ class NormalDistribution:
         self.mu = mu
         self.sigma = sigma
 
-
     def random(self, size=None):
         return np.random.normal(self.mu, self.sigma, size)
 
-
     def plot(self, num=100):
-        x = np.linspace(self.mu - 3 * self.sigma, self.mu + 3 * self.sigma, num)
+        x = np.linspace(self.mu - 3 * self.sigma,
+                        self.mu + 3 * self.sigma, num)
         plt.plot(x, stats.norm.pdf(x, self.mu, self.sigma))
         plt.show()
-
