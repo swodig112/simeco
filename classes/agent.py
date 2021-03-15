@@ -35,7 +35,7 @@ class Agent:
         if(self.working):
             if(self.income == 0):
                 self.income = 0.9 * self.previncome
-                #self.income = 1000 * (1.01**((self.age - self.initial_age)//12))
+                # self.income = 1000 * (1.01**((self.age - self.initial_age)//12))
             self.income += self.income_changes.random()
 
         elif(not self.working):
