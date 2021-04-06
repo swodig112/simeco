@@ -18,6 +18,19 @@ def main(N, M):
     working_possibility_getting_hired = np.random.choice(
         [0, 1], p=[hire, 1 - hire], size=(M, N))
 
+    loan_payment_amount = np.random.normal(150, 30, (N, 20))
+    loan_return_amount = loan_payment_amount * \
+        np.random.normal(13, 1, (N, 20)).astype(int)
+    interest = np.random.normal(15, 2, (N, 20))
+    loan_amount = loan_return_amount * (100 / (interest + 100))
+    loan_time = np.random.normal(5 * 12, 6, (N, 20))
+    loan_time = np.cumsum(loan_time, axis=1)
+    loan_payment_table = np.zeros((M, N))
+    for i in range(N):
+        for j in range(20):
+            loan_payment_table[int(loan_time[i, j]):int(
+                loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] = loan_payment_amount[i, j]
+
     for m in range(M):
         age += 1
         workingcopy = working.copy()
