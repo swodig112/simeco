@@ -29,7 +29,9 @@ def main(N, M):
     for i in range(N):
         for j in range(20):
             loan_payment_table[int(loan_time[i, j]):int(
-                loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] = loan_payment_amount[i, j]
+                loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] = -1 * loan_payment_amount[i, j]
+            loan_payment_table[int(loan_time[i, j]):int(
+                loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] += loan_amount[i, j]
 
     for m in range(M):
         age += 1
@@ -44,9 +46,8 @@ def main(N, M):
         income[np.invert(working)] = 0
         income += income_changes[m]
         expenses += expenses_changes[m]
-        income[np.invert(working)] = 0
 
-        money += income - expenses
+        money += income - expenses + loan_payment_table[m]
 
 
 if __name__ == "__main__":
