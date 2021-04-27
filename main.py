@@ -26,6 +26,8 @@ def main(N, M):
     loan_time = np.random.normal(5 * 12, 6, (N, 20))
     loan_time = np.cumsum(loan_time, axis=1)
     loan_payment_table = np.zeros((M, N))
+    agent = {"money": np.zeros((N,M)), "income" : np.zeros((N,M)), "expenses" : np.zeros((N,M)), "debt": np.zeros((N,M)), "Tax": np.zeros((N,M))}
+
     for i in range(N):
         for j in range(20):
             loan_payment_table[int(loan_time[i, j]):int(
@@ -49,6 +51,17 @@ def main(N, M):
 
         money += income - expenses + loan_payment_table[m]
 
+        agent["money"][:, m]= money
+        agent["income"][:, m]= income
+        agent["expenses"][:, m]= expenses
+        agent["Tax"][:, m] = tax
+        #agnet["debt"][:, m ] = debt
+
+    plt.plot(agent["money"][0])
+    plt.plot(agent["income"][0])
+    plt.plot(agent["expenses"][0])
+    plt.plot(agent["Tax"][0])
+    plt.show()
 
 if __name__ == "__main__":
     main(10, 12)
