@@ -63,5 +63,6 @@ def main(N, M):
     plt.plot(agent["Tax"][0])
     plt.show()
 
+    np.save("data.npy", agent)
 if __name__ == "__main__":
     main(10, 12)
