@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def main(N, M):
@@ -11,8 +12,10 @@ def main(N, M):
     income_changes = np.random.normal(155, 5, (M, N))
     expenses_changes = np.random.normal(15, 5, (M, N))
     working = np.zeros(N, dtype=bool)
-    fire = 0.01
-    hire = 0.20
+    Tax = np.zeros(N, dtype=np.float64)
+
+    fire = 0.15
+    hire = 0.60
     working_possibility_getting_fired = np.random.choice(
         [0, 1], p=[fire, 1 - fire], size=(M, N))
     working_possibility_getting_hired = np.random.choice(
@@ -33,6 +36,7 @@ def main(N, M):
             loan_payment_table[int(loan_time[i, j]):int(
                 loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] += loan_amount[i, j]
 
+    agent = {"money": np.zeros((N,M)), "income" : np.zeros((N,M)), "expenses" : np.zeros((N,M)), "debt": np.zeros((N,M)), "Tax": np.zeros((N,M))}
     for m in range(M):
         age += 1
         workingcopy = working.copy()
@@ -44,11 +48,24 @@ def main(N, M):
         income[np.bitwise_and(working, np.invert(
             workingcopy))] = previncome[np.bitwise_and(working, np.invert(workingcopy))]
         income[np.invert(working)] = 0
+        Tax[workingcopy] = 0.06 * income[workingcopy]
         income += income_changes[m]
         expenses += expenses_changes[m]
 
-        money += income - expenses + loan_payment_table[m]
+        money += income - expenses + loan_payment_table[m] - Tax
 
+        agent["money"][:, m]= money
+        agent["income"][:, m]= income
+        agent["expenses"][:, m]= expenses
+        agent["Tax"][:, m] = Tax
+        #agnet["debt"][:, m ] = debt
 
+    plt.plot(agent["money"][0])
+    plt.plot(agent["income"][0])
+    plt.plot(agent["expenses"][0])
+    plt.plot(agent["Tax"][0])
+    plt.show()
+
+    np.save("data.npy", agent)
 if __name__ == "__main__":
-    main(10, 12)
+    main(10000, 500)
