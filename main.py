@@ -37,6 +37,7 @@ def main(N, M):
                 loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] = -1 * loan_payment_amount[i, j]
             loan_payment_table[int(loan_time[i, j]):int(
                 loan_time[i, j] + loan_return_amount[i, j] / loan_payment_amount[i, j]), i] += loan_amount[i, j]
+    debt = np.zeros(N)
 
     for m in range(M):
         age += 1
@@ -52,13 +53,17 @@ def main(N, M):
         income += income_changes[m]
         expenses += expenses_changes[m]
 
+        money[debt > 0] -= debt[debt > 0]
+        debt[debt > 0] = 0
         money += income - expenses + loan_payment_table[m] - tax
+        debt[money < 0] = -1 * money[money < 0]
+        money[money < 0] = 0
 
         agent["money"][:, m] = money
         agent["income"][:, m] = income
         agent["expenses"][:, m] = expenses
         agent["Tax"][:, m] = tax
-        #agnet["debt"][:, m ] = debt
+        agent["debt"][:, m] = debt
 
     plt.plot(agent["money"][0])
     plt.plot(agent["income"][0])
@@ -70,4 +75,4 @@ def main(N, M):
 
 
 if __name__ == "__main__":
-    main(10, 12)
+    main(10, 500)
