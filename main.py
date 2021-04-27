@@ -11,6 +11,7 @@ def main(N, M):
     income_changes = np.random.normal(155, 5, (M, N))
     expenses_changes = np.random.normal(15, 5, (M, N))
     working = np.zeros(N, dtype=bool)
+    tax = np.zeros(N, dtype=np.float64)
     fire = 0.01
     hire = 0.20
     working_possibility_getting_fired = np.random.choice(
@@ -44,10 +45,11 @@ def main(N, M):
         income[np.bitwise_and(working, np.invert(
             workingcopy))] = previncome[np.bitwise_and(working, np.invert(workingcopy))]
         income[np.invert(working)] = 0
+        tax[workingcopy] = 0.06 * income[workingcopy]
         income += income_changes[m]
         expenses += expenses_changes[m]
 
-        money += income - expenses + loan_payment_table[m]
+        money += income - expenses + loan_payment_table[m] - tax
 
 
 if __name__ == "__main__":
