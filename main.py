@@ -41,15 +41,14 @@ def main(N, M):
     for m in range(M):
         age += 1
         workingcopy = working.copy()
-        working[np.invert(
-            workingcopy)] = working_possibility_getting_hired[m, np.invert(workingcopy)]
-        working[workingcopy] = working_possibility_getting_fired[m, workingcopy]
+        working[workingcopy == 0] = working_possibility_getting_hired[m, workingcopy == 0]
+        working[workingcopy == 1] = working_possibility_getting_fired[m, workingcopy == 1]
         previncome[np.bitwise_and(workingcopy, np.invert(
-            working))] = income[np.bitwise_and(workingcopy, np.invert(working))] * 0.9
+            working)) == 1] = income[np.bitwise_and(workingcopy, np.invert(working)) == 1] * 0.9
         income[np.bitwise_and(working, np.invert(
-            workingcopy))] = previncome[np.bitwise_and(working, np.invert(workingcopy))]
-        income[np.invert(working)] = 0
-        tax[workingcopy] = 0.06 * income[workingcopy]
+            workingcopy)) == 1] = previncome[np.bitwise_and(working, np.invert(workingcopy)) == 1]
+        income[working == 0] = 0
+        tax[workingcopy == 1] = 0.06 * income[workingcopy == 1]
         income += income_changes[m]
         expenses += expenses_changes[m]
 
